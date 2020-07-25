@@ -66,11 +66,11 @@ abstract class TemporaryTable extends \yii\db\ActiveRecord
         return static::$tableName;
     }
 
-    public static function createIndex(string $indexName, string $tableName, $columns = [], $unique = false)
+    public static function createIndex(string $name, string $tableName, $columns = [], $unique = false)
     {
-        $indexName = static::$indexPrefix . $indexName . static::$indexSuffix;
+        $name = static::$indexPrefix . $name . static::$indexSuffix;
 
-        Yii::$app->db->createCommand()->createIndex($indexName, $tableName, $columns, $unique)->execute();
+        Yii::$app->db->createCommand()->createIndex($name, $tableName, $columns, $unique)->execute();
     }
 
 }
