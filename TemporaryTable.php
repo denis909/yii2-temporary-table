@@ -33,24 +33,24 @@ abstract class TemporaryTable extends \yii\db\ActiveRecord
 
         if (defined('YII_ENV_TEST') && YII_ENV_TEST && (Yii::$app->db->getTableSchema($return, true) === null))
         {
-            if ($createdIndex)
+            if ($createdIndex !== false)
             {
-                $createdIndex = null;
+                $createdIndex = false;
 
                 unset(static::$createdTemporaryTables[$createdIndex]);
             }
         }
 
-        if ($createdIndex && $refresh)
+        if (($createdIndex !== false) && $refresh)
         {
             static::dropTemporaryTable(static::$tableName);
 
-            $createdIndex = null;
+            $createdIndex = false;
 
             unset(static::$createdTemporaryTables[$createdIndex]);            
         }
 
-        if (!$createdIndex)
+        if ($createdIndex === false)
         {
             static::createTemporaryTable(static::$tableName, $sql);
 
