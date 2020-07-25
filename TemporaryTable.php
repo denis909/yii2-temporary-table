@@ -9,7 +9,13 @@ abstract class TemporaryTable extends \yii\db\ActiveRecord
 
     public static $tableName;
 
+    public static $indexPrefix = '';
+
+    public static $indexSuffix = '';
+
     public static $createdTemporaryTables = [];
+
+    public static abstract function createTable(string $tableName);
 
     public static function createTemporaryTable(string $tableName, string $sql)
     {
@@ -25,7 +31,7 @@ abstract class TemporaryTable extends \yii\db\ActiveRecord
         return Yii::$app->db->createCommand($sql)->execute();
     }
 
-    public static function tableName(bool $refresh = false, ?string $sql = null)
+    public static function tableName(bool $refresh = false)
     {
         Assert::notEmpty(static::$tableName);
 
@@ -52,12 +58,19 @@ abstract class TemporaryTable extends \yii\db\ActiveRecord
 
         if ($createdIndex === false)
         {
-            static::createTemporaryTable(static::$tableName, $sql);
+            static::createTable(static::$tableName);
 
             static::$createdTemporaryTables[] = static::$tableName;
         }
 
         return static::$tableName;
+    }
+
+    public static function createIndex(string $indexName, string $tableName, $columns = [], $unique = false)
+    {
+        $indexName = static::$indexPrefix . $indexName . static::$indexSuffix;
+
+        Yii::$app->db->createCommand()->createIndex($indexName, $tableName, $columns, $unique)->execute();
     }
 
 }
