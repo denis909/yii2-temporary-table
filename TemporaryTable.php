@@ -37,7 +37,7 @@ abstract class TemporaryTable extends \yii\db\ActiveRecord
 
         $createdIndex = array_search(static::$tableName, static::$createdTemporaryTables);
 
-        if (defined('YII_ENV_TEST') && YII_ENV_TEST && (Yii::$app->db->getTableSchema($return, true) === null))
+        if (defined('YII_ENV_TEST') && YII_ENV_TEST && (Yii::$app->db->getTableSchema(static::$tableName, true) === null))
         {
             if ($createdIndex !== false)
             {
