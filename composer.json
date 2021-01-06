@@ -5,8 +5,5 @@
         "psr-4": {
             "denis909\\yii\\" : ""
         }
-    },
-    "require": {
-        "denis909/yii2-assert": "*"
     }
 }

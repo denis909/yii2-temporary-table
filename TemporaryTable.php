@@ -33,7 +33,7 @@ abstract class TemporaryTable extends \yii\db\ActiveRecord
 
     public static function tableName(bool $refresh = false)
     {
-        Assert::notEmpty(static::$tableName);
+        assert(static::$tableName ? true : false, __CLASS__ . '::$tableName');
 
         $createdIndex = array_search(static::$tableName, static::$createdTemporaryTables);
 
